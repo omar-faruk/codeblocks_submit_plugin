@@ -1,10 +1,12 @@
 #receiving script
 import socket
 s = socket.socket()
-host = '192.168.0.108'
+tmp=socket.socket()
+host = str([(tmp.connect(('8.8.8.8', 80)), tmp.getsockname()[0], tmp.close()) for tmp in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1])
 port = 12345
 s.bind((host, port))
 s.listen(5)
+print host+" is listening on port ",port
 while True:
     c, addr = s.accept()
     l = c.recv(48)
