@@ -1,12 +1,22 @@
-import socket,sys,time
+import socket,sys,time,platform
 
 s = socket.socket()
 filename=sys.argv[1]
-host=input("host ip= ")
+
+host=raw_input("host ip= ")
 port = 12345
 s.connect((host,port))
-index=filename.rindex('\\')+1
-fname=filename[index:]
+
+if(platform.system() is 'Linux' or 'Linux'):
+	index=filename.rindex('/')+1  
+elif(platform.system() is 'Windows' or 'windows'):
+	index=filename.rindex('\\')+1
+	
+if(index>0):
+	fname=filename[index:]
+else:
+	fname=filename
+	
 s.send(fname.encode('utf-8'))
 time.sleep(.2)
 print ('Sending: '+fname)
